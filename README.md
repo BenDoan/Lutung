@@ -4,15 +4,15 @@ Automatically creates comments for java source code
 
 TODO
 ====
--getters and setters
--boolean expressions
-
+- getters and setters
+- boolean expressions
+- grammar list
+ 
 #idoms
--isTrue
--getThis
--setThat
--returnThat
--genThose
--parseThat
+- isTrue
+- setThat
+- returnThat
+- genThose
+- parseThat
 
--grammar list
+
