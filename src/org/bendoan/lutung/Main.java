@@ -7,14 +7,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
 
+import java.util.HashMap; //TODO: remove with test methods
+
 class Main{
-    public static void main(String args[]){
+    public static void main(String[] args){
         if (args.length > 0){
             String fileName = args[0];
             String file = readFile(fileName);
+
             String[] splitFile = file.split("\n");
             for (int commentIndex : getMethodIndexes(splitFile)){
                Comment c = new Comment(splitFile[commentIndex]);
+               System.out.println(c);
             }
         }else{
             System.out.println("No argument given");
@@ -30,7 +34,6 @@ class Main{
             if(matcher.matches())
                 methodIndexes.add(i);
         }
-        System.out.println(methodIndexes);
         return methodIndexes;
     }
 
@@ -58,5 +61,14 @@ class Main{
         }
 
         return returnString;
+    }
+
+    protected HashMap<ArrayList<String>, String> testFunc1_delimdelim(String param1, int param2, ArrayList<String> param3)
+    {
+        return null;
+    }
+
+    protected static void testFunc2_delimdelim(String param1, int param2, ArrayList<String> param3){
+        return;
     }
 }
