@@ -6,7 +6,7 @@ import java.lang.StringBuilder;
 
 class Comment{
     String signature;
-    HashMap<String, String> params; //param type:name
+    HashMap<String, String> params; //type:name
     String returnType;
     String name;
 
@@ -17,32 +17,20 @@ class Comment{
     }
 
     private void parseSignature(){
-        String[] trashKeywords = {
-                                    "public",
-                                    "private",
-                                    "protected",
-                                    "abstract",
-                                    "static",
-                                    "final",
-                                    "strictfp",
-                                    "transient",
-                                    "volatile",
-                                    "synchronized",
-                                    "native",
-                                    "threadsafe"
-                                };
+        String[] trashKeywords = {"public", "private", "protected", "abstract", "static", "final", "strictfp", "transient", "volatile", "synchronized", "native", "threadsafe"};
 
-        ArrayList<String> splitSignature = new ArrayList<>();
-        this.signature = this.signature.replace("(", " ");
+        this.signature = this.signature.replace("(", " "); //replace with space so it splits
         this.signature = this.signature.replace(")", "");
 
-        for(String s : this.signature.trim().split(" "))
+        ArrayList<String> splitSignature = new ArrayList<>();
+        for(String s : this.signature.trim().split(" ")) //add split parts to list
             if (!arrayContains(s, trashKeywords))
                 splitSignature.add(removeTrashChars(s));
 
         this.returnType = splitSignature.get(0);
         this.name = splitSignature.get(1);
-        for (int i = 3; i < splitSignature.size(); i+=2)
+
+        for (int i = 3; i < splitSignature.size(); i+=2) //add params to param list
             this.params.put(splitSignature.get(i-1), splitSignature.get(i));
     }
 
@@ -62,13 +50,26 @@ class Comment{
         return false;
     }
 
+    private int getLongestWordLength(){
+        int longestLength = returnType.length();
+        return 0;
+    }
+
     public String toString(){
+        int maxWidth = 5;
+
         String returnString = "";
         returnString += "/**\n";
-        returnString += " * Name\t\t" + this.name + "\n";
-        returnString += " * Params\t" + this.params + "\n";
-        if (this.returnType != "void")
-            returnString += " * @return\t" + this.returnType + "\n";
+        returnString += String.format(" * %-7s %s\n", "Name", this.name);
+
+        //get params
+        for (String key : this.params.keySet()){
+                returnString += String.format(" * %-7s %-5s %-5s\n", "@param", key, this.params.get(key));
+        }
+
+        if (!this.returnType.equals("void"))
+            returnString += String.format(" * %-7s %-5s \n", "@return", this.returnType);
+
         returnString += "**/\n";
         return returnString;
     }
