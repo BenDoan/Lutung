@@ -1,11 +1,14 @@
 package org.bendoan.lutung;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.AbstractCollection;
+
+import java.io.*;
 
 import java.util.HashMap; //TODO: remove with test methods
 
@@ -18,6 +21,7 @@ class Main{
             String[] splitFile = file.split("\n");
             for (int commentIndex : getMethodIndexes(splitFile)){
                Comment c = new Comment(splitFile[commentIndex]);
+               writeComment(fileName, c.toString(), commentIndex);
                System.out.println(c);
             }
         }else{
@@ -34,6 +38,7 @@ class Main{
             if(matcher.matches())
                 methodIndexes.add(i);
         }
+        Collections.reverse(methodIndexes);
         return methodIndexes;
     }
 
@@ -63,6 +68,37 @@ class Main{
         return returnString;
     }
 
+    private static void writeComment(String name, String comment, int index)
+    {
+        File f = new File(name);
+        String  writeString = "";
+        if(f.exists())
+            writeString = readFile(name);
+
+        ArrayList<String> lst = new ArrayList(Arrays.asList(writeString.split("\n")));
+
+        lst.addAll(index, Arrays.asList(comment.split("\n")));
+        writeString = join(lst, "\n");
+
+        try{
+            BufferedWriter output = new BufferedWriter(new FileWriter(f.getAbsoluteFile()));
+            output.write(writeString);
+            output.close();
+        }catch (IOException e){
+        }
+    }
+
+    private static String join(AbstractCollection<String> s, String delimiter) {
+        if (s == null || s.isEmpty()) return "";
+        Iterator<String> iter = s.iterator();
+        StringBuilder builder = new StringBuilder(iter.next());
+        while( iter.hasNext() )
+        {
+            builder.append(delimiter).append(iter.next());
+        }
+        return builder.toString();
+    }
+
     protected HashMap<ArrayList<String>, String> testFunc1_delimdelim(String param1, int param2, ArrayList<String> param3)
     {
         return null;
@@ -70,5 +106,9 @@ class Main{
 
     protected static void testFunc2_delimdelim(String param1, int param2, ArrayList<String> param3){
         return;
+    }
+
+    public boolean isSet(){
+        return true;
     }
 }

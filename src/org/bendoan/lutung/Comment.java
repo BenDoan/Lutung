@@ -50,16 +50,11 @@ class Comment{
         return false;
     }
 
-    private int getLongestWordLength(){
-        int longestLength = returnType.length();
-        return 0;
-    }
-
     public String toString(){
-        int maxWidth = 5;
-
         String returnString = "";
         returnString += "/**\n";
+
+        //String description = Language.getKeywordDescription(this.name);
         returnString += String.format(" * %-7s %s\n", "Name", this.name);
 
         //get params
