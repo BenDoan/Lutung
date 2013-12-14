@@ -10,8 +10,6 @@ import java.util.AbstractCollection;
 
 import java.io.*;
 
-import java.util.HashMap; //TODO: remove with test methods
-
 class Main{
     public static void main(String[] args){
         if (args.length > 0){
@@ -94,18 +92,5 @@ class Main{
         while(iter.hasNext())
             builder.append(delimiter).append(iter.next());
         return builder.toString();
-    }
-
-    protected HashMap<ArrayList<String>, String> testFunc1_delimdelim(String param1, int param2, ArrayList<String> param3)
-    {
-        return null;
-    }
-
-    protected static void testFunc2_delimdelim(String param1, int param2, ArrayList<String> param3){
-        return;
-    }
-
-    public boolean isSet(){
-        return true;
     }
 }
