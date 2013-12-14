@@ -19,10 +19,9 @@ class Main{
             String file = readFile(fileName);
 
             String[] splitFile = file.split("\n");
-            for (int commentIndex : getMethodIndexes(splitFile)){
+            for (int commentIndex : getMethodIndexes(splitFile)){  //method index order is reversed
                Comment c = new Comment(splitFile[commentIndex]);
                writeComment(fileName, c.toString(), commentIndex);
-               System.out.println(c);
             }
         }else{
             System.out.println("No argument given");
@@ -92,10 +91,8 @@ class Main{
         if (s == null || s.isEmpty()) return "";
         Iterator<String> iter = s.iterator();
         StringBuilder builder = new StringBuilder(iter.next());
-        while( iter.hasNext() )
-        {
+        while(iter.hasNext())
             builder.append(delimiter).append(iter.next());
-        }
         return builder.toString();
     }
 

@@ -12,11 +12,11 @@ class Comment{
 
     public Comment(String line){
         this.signature = line;
-        this.params = new HashMap<String, String>();
-        parseSignature();
+        this.params = parseSignature();
     }
 
-    private void parseSignature(){
+    private HashMap<String, String> parseSignature(){
+        HashMap<String, String> returnParams = new HashMap<String, String>();
         String[] trashKeywords = {"public", "private", "protected", "abstract", "static", "final", "strictfp", "transient", "volatile", "synchronized", "native", "threadsafe"};
 
         this.signature = this.signature.replace("(", " "); //replace with space so it splits
@@ -31,7 +31,9 @@ class Comment{
         this.name = splitSignature.get(1);
 
         for (int i = 3; i < splitSignature.size(); i+=2) //add params to param list
-            this.params.put(splitSignature.get(i-1), splitSignature.get(i));
+            returnParams.put(splitSignature.get(i-1), splitSignature.get(i));
+
+        return returnParams;
     }
 
     private String removeTrashChars(String str){
@@ -50,22 +52,34 @@ class Comment{
         return false;
     }
 
+    private String getBeginSpace(){
+        String spaces = "";
+        for (char c : this.signature.toCharArray()){
+            if (c == ' ' || c == '\t')
+                spaces += c;
+            else
+                break;
+        }
+        return spaces;
+    }
+
     public String toString(){
+        String spaces = getBeginSpace();
         String returnString = "";
-        returnString += "/**\n";
 
-        //String description = Language.getKeywordDescription(this.name);
-        returnString += String.format(" * %-7s %s\n", "Name", this.name);
+        returnString += spaces + "/**\n";
 
-        //get params
+        returnString += spaces + String.format(" * %-7s %s\n", "Name", this.name);
+
+        //add params
         for (String key : this.params.keySet()){
-                returnString += String.format(" * %-7s %-5s %-5s\n", "@param", key, this.params.get(key));
+                returnString += spaces + String.format(" * %-7s %-5s %-5s\n", "@param", key, this.params.get(key));
         }
 
         if (!this.returnType.equals("void"))
-            returnString += String.format(" * %-7s %-5s \n", "@return", this.returnType);
+            returnString += spaces + String.format(" * %-7s %-5s \n", "@return", this.returnType);
 
-        returnString += "**/\n";
+        returnString += spaces + "**/\n";
         return returnString;
     }
 }
