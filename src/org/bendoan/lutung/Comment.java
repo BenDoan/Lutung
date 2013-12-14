@@ -115,6 +115,7 @@ class Comment{
         returnString += spaces + "/**\n";
 
         returnString += spaces + String.format(" * %s\n", getNameDescription(this.name));
+        returnString += spaces + " *\n";
 
         //add params
         for (String key : this.params.keySet()){
