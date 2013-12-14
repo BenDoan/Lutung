@@ -13,13 +13,14 @@ import java.io.*;
 class Main{
     public static void main(String[] args){
         if (args.length > 0){
-            String fileName = args[0];
-            String file = readFile(fileName);
+            for (String fileName : args){
+                String file = readFile(fileName);
 
-            String[] splitFile = file.split("\n");
-            for (int commentIndex : getMethodIndexes(splitFile)){  //method index order is reversed
-               Comment c = new Comment(splitFile[commentIndex]);
-               writeComment(fileName, c.toString(), commentIndex);
+                String[] splitFile = file.split("\n");
+                for (int commentIndex : getMethodIndexes(splitFile)){  //method index order is reversed
+                   Comment c = new Comment(splitFile[commentIndex]);
+                   writeComment(fileName, c.toString(), commentIndex);
+                }
             }
         }else{
             System.out.println("No argument given");
