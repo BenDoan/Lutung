@@ -70,12 +70,9 @@ class Comment{
             {"equals", "Tests equality between this object and another"},
             {"compareTo", "Compares this object to another"}
         };
-
-        for (String[] shortcut : shortcuts){
-            if (name.equals(shortcut[0])){
+        for (String[] shortcut : shortcuts)
+            if (name.equals(shortcut[0]))
                 return shortcut[1];
-            }
-        }
 
         String[] splitStr = name.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])"); //splits camelCase
         String desc = "";
@@ -93,21 +90,17 @@ class Comment{
             {"display", "Prints the"},
             {"process", "Processes the"}
         };
-
         for (String[] idiom : idioms){
             if (splitStr[0].equals(idiom[0])){
                 desc = idiom[1] + " ";
             }
         }
 
-        if (desc == ""){
+        //add rest of words to description
+        if (desc == ""){// does not match any idiom
             desc = "the ";
-            isAction = false;
-        }
-
-        if (isAction){
             for(String s : Arrays.copyOfRange(splitStr, 1, splitStr.length)){
-                desc += s.toLowerCase() + " ";
+                desc = s.toLowerCase() + " ";
             }
         }else{
             for(String s : splitStr){
@@ -115,6 +108,7 @@ class Comment{
             }
         }
 
+        //expands abbreviations
         String[][] abbrs = {
             {"char", "character"},
             {"chars", "characters"},
@@ -122,10 +116,8 @@ class Comment{
             {"min", "minimum"},
             {"max", "maximum"},
         };
-
-        for (String[] abbr : abbrs){
+        for (String[] abbr : abbrs)
             desc.replace(abbr[0], abbr[1]);
-        }
 
         return desc;
     }
