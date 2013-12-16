@@ -65,32 +65,42 @@ class Comment{
     }
 
     private String getNameDescription(String name){
-        if (name.equals("toString"))
-            return "Returns the string representation of the object";
-        if (name.equals("equals"))
-            return "Tests equality between this object and another";
-        if (name.equals("compareTo"))
-            return "Compares this object to another";
+        String[][] shortcuts = {
+            {"toString", "Returns the string representation of the object"},
+            {"equals", "Tests equality between this object and another"},
+            {"compareTo", "Compares this object to another"}
+        };
+
+        for (String[] shortcut : shortcuts){
+            if (name.equals(shortcut[0])){
+                return shortcut[1];
+            }
+        }
 
         String[] splitStr = name.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])"); //splits camelCase
         String desc = "";
         boolean isAction = true;
 
-        if (splitStr[0].equals("is")){
-            desc = "Is ";
-        }else if (splitStr[0].equals("set")){
-            desc = "Sets the ";
-        }else if (splitStr[0].equals("get")){
-            desc = "Gets the ";
-        }else if (splitStr[0].equals("return")){
-            desc = "Returns the ";
-        }else if (splitStr[0].equals("gen")){
-            desc = "Generates the ";
-        }else if (splitStr[0].equals("parse")){
-            desc = "Parses the ";
-        }else if (splitStr[0].equals("remove")){
-            desc = "Removes the ";
-        }else{
+        String[][] idioms = {
+            {"is", "Checks if is"},
+            {"set", "Sets the"},
+            {"get", "Gets the"},
+            {"return", "Returns the"},
+            {"gen", "Generates the"},
+            {"parse", "Parses the"},
+            {"remove", "Removes the"},
+            {"print", "Prints the"},
+            {"display", "Prints the"},
+            {"process", "Processes the"}
+        };
+
+        for (String[] idiom : idioms){
+            if (splitStr[0].equals(idiom[0])){
+                desc = idiom[1] + " ";
+            }
+        }
+
+        if (desc == ""){
             desc = "the ";
             isAction = false;
         }
@@ -103,6 +113,18 @@ class Comment{
             for(String s : splitStr){
                 desc += s.toLowerCase() + " ";
             }
+        }
+
+        String[][] abbrs = {
+            {"char", "character"},
+            {"chars", "characters"},
+            {"str", "string"},
+            {"min", "minimum"},
+            {"max", "maximum"},
+        };
+
+        for (String[] abbr : abbrs){
+            desc.replace(abbr[0], abbr[1]);
         }
 
         return desc;

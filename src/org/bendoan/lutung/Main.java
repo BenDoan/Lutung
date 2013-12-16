@@ -86,6 +86,7 @@ class Main{
         }
     }
 
+    //from: http://stackoverflow.com/questions/794248/a-method-to-reverse-effect-of-java-string-split
     private static String join(AbstractCollection<String> s, String delimiter) {
         if (s == null || s.isEmpty()) return "";
         Iterator<String> iter = s.iterator();
